@@ -11,9 +11,6 @@ export default function Home() {
   const [weekOrders, setWeekOrders] = useState(0);
   const [weekRevenue, setWeekRevenue] = useState(0);
 
-  useEffect(() => { axios.get('/api/stores') }, []
-  );
-
   useEffect(() => {
     axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
       if (res.data?.store) setStore(res.data.store);
