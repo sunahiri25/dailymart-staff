@@ -13,10 +13,7 @@ export default function Products() {
     function handleShowLess() {
         setShowMore(1);
     }
-    useEffect(() => {
-        axios.get('/api/categories')
-        axios.get('/api/brands')
-    }, []);
+
     useEffect(() => {
         axios.get('/api/products').then(response => {
             setProducts(response.data);

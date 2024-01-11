@@ -18,7 +18,6 @@ export default function Home() {
     axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
       if (res.data?.store) setStore(res.data.store);
     })
-
   }, [session]);
   useEffect(() => {
     async function fetchDashboardData() {

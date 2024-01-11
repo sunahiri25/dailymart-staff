@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function StockPage() {
