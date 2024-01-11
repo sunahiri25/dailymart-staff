@@ -33,8 +33,12 @@ export default function CustomersPage() {
                             <td>{customer.name}</td>
                             <td>{customer.email}</td>
                             <td>{customer.phone}</td>
-                            <td>{customer.address}, {customer.ward}, <br />
-                                {customer.district}, {customer.city}</td>
+                            <td>
+                                {customer.address &&
+                                    <p>
+                                        {customer.address}, {customer.ward}, <br />
+                                        {customer.district}, {customer.city}</p>}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
