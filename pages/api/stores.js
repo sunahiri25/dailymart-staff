@@ -1,0 +1,20 @@
+import { mongooseConnect } from "@/lib/mongoose";
+import { Store } from "@/models/Store";
+import { isAdminRequest } from "./auth/[...nextauth]";
+
+export default async function handler(req, res) {
+    const { method } = req;
+    await mongooseConnect();
+    await isAdminRequest(req, res)
+
+    if (method !== 'GET') {
+        res.status(405).end(`Method ${method} Not Allowed`)
+        return;
+    }
+    if (req.query?.id) {
+        res.json(await Store.findOne({ _id: req.query.id }).populate('manager'));
+    } else {
+        res.json(await Store.find({}).populate('manager').sort({ name: 1 }));
+    }
+
+}
