@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
-      if (res.data?.store !== undefined) setStore(res.data.store);
+      setStore(res.data.store);
     })
   }, [session]);
   useEffect(() => {
