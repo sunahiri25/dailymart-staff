@@ -5,16 +5,18 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const session = useSession();
-  const [store, setStore] = useState();
+  const [store, setStore] = useState('');
   const [orders, setOrders] = useState(0);
   const [revenue, setRevenue] = useState(0);
   const [weekOrders, setWeekOrders] = useState(0);
   const [weekRevenue, setWeekRevenue] = useState(0);
 
   useEffect(() => {
-    axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
-      setStore(res.data.store);
-    })
+    if (session?.data?.user?.email) {
+      axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
+        setStore(res.data?.store);
+      })
+    }
   }, [session]);
   useEffect(() => {
     async function fetchDashboardData() {

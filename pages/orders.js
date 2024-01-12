@@ -8,13 +8,22 @@ export default function OrdersPage() {
     const [orders, setOrders] = useState([]);
     const [store, setStore] = useState();
     const session = useSession();
+    const [showMore, setShowMore] = useState(1);
+
+    function handleShowMore() {
+        setShowMore(showMore + 1);
+    }
+
+    function handleShowLess() {
+        setShowMore(1);
+    }
     useEffect(() => {
         axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
             if (res.data?.store) setStore(res.data.store);
         })
     }, [session]);
     useEffect(() => {
-        if (store !== undefined) axios.get('/api/orders?store=' + store?._id).then(res => setOrders(res.data));
+        if (store) axios.get('/api/orders?store=' + store?._id).then(res => setOrders(res.data));
     }, [store]);
 
     return (
@@ -36,7 +45,7 @@ export default function OrdersPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.length > 0 && orders.map(order => (
+                    {orders.length > 0 && orders.slice(0, showMore * 10 < orders.length ? showMore * 10 : orders.length).map(order => (
                         <tr key={order._id}>
                             <td>{(new Date(order.createdAt)).toLocaleString()}</td>
                             <td className="text-center">{order.paymentMethod}</td>
@@ -78,6 +87,14 @@ export default function OrdersPage() {
                     ))}
                 </tbody>
             </table>
+            <div className="flex gap-5">
+                {showMore * 10 < orders.length && orders.length > 10 && (
+                    <button onClick={handleShowMore} className="btn-primary mt-2">More</button>
+                )}
+                {showMore > 1 && (
+                    <button onClick={handleShowLess} className="btn-primary mt-2">Hide</button>
+                )}
+            </div>
         </Layout>
     )
 }

@@ -7,13 +7,22 @@ export default function CustomersPage() {
     const [customers, setCustomers] = useState([]);
     const [store, setStore] = useState();
     const session = useSession();
+    const [showMore, setShowMore] = useState(1);
+
+    function handleShowMore() {
+        setShowMore(showMore + 1);
+    }
+
+    function handleShowLess() {
+        setShowMore(1);
+    }
     useEffect(() => {
         axios.get('/api/staffs?email=' + session?.data?.user?.email).then(res => {
             if (res.data?.store) setStore(res.data.store);
         })
     }, [session]);
     useEffect(() => {
-        if (store !== undefined) axios.get('/api/customers?store=' + store?._id).then(res => setCustomers(res.data));
+        if (store) axios.get('/api/customers?store=' + store?._id).then(res => setCustomers(res.data));
     }, [store]);
     return (
         <Layout>

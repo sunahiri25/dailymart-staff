@@ -1,6 +1,8 @@
 import { mongooseConnect } from '@/lib/mongoose';
 import { Product } from '@/models/Products';
 import { isAdminRequest } from './auth/[...nextauth]';
+import { Category } from '@/models/Category';
+import { Brand } from '@/models/Brand';
 
 export default async function handler(req, res) {
     const { method } = req
@@ -11,6 +13,8 @@ export default async function handler(req, res) {
         res.status(405).end(`Method ${method} Not Allowed`)
         return;
     }
+    await Category.find({});
+    await Brand.find({});
     if (req.query?.id) {
         res.json(await Product.findOne({ _id: req.query.id }));
     } else {

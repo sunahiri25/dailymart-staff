@@ -11,6 +11,7 @@ export default async function handler(req, res) {
         res.status(405).end(`Method ${method} Not Allowed`)
         return;
     }
+    await Category.find({});
     if (req.query?.id) {
         res.json(await Discount.findOne({ _id: req.query.id }));
     } else {

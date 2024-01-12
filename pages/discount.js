@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 
 export default function DiscountPage() {
     const [discounts, setDiscounts] = useState([]);
+    const [showMore, setShowMore] = useState(1);
+
+    function handleShowMore() {
+        setShowMore(showMore + 1);
+    }
+
+    function handleShowLess() {
+        setShowMore(1);
+    }
     useEffect(() => {
         axios.get('/api/discount').then(response => {
             setDiscounts(response.data);
@@ -27,7 +36,7 @@ export default function DiscountPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {discounts.map(discount => (
+                    {discounts.slice(0, showMore * 10 < discounts.length ? showMore * 10 : discounts.length).map(discount => (
                         <tr key={discount._id}>
                             <td>{discount.name}</td>
                             <td>
@@ -41,6 +50,14 @@ export default function DiscountPage() {
                     ))}
                 </tbody>
             </table>
+            <div className="flex gap-5">
+                {showMore * 10 < discounts.length && discounts.length > 10 && (
+                    <button onClick={handleShowMore} className="btn-primary mt-2">More</button>
+                )}
+                {showMore > 1 && (
+                    <button onClick={handleShowLess} className="btn-primary mt-2">Hide</button>
+                )}
+            </div>
         </Layout>
     )
 }

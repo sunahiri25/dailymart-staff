@@ -32,9 +32,6 @@ export default function NewOrder() {
         axios.get('/api/categories').then(res => {
             setCategories(res.data);
         });
-        axios.get('/api/stock');
-        axios.get('/api/products');
-        axios.get('/api/brands');
     }, []);
     useEffect(() => {
         if (store) axios.get('/api/stock?store=' + store?._id).then(res => {
