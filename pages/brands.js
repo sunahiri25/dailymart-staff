@@ -29,9 +29,11 @@ export default function Brands() {
     return (
         <Layout>
             <h1>Brands</h1>
+            <h2 className="text-red-700 text-lg">Number of brands: {brands.length}</h2>
             <table className="basic mt-4">
                 <thead>
                     <tr>
+                        <td>Brand ID</td>
                         <td>Brand Name</td>
                         <td>Brand Active</td>
 
@@ -40,6 +42,7 @@ export default function Brands() {
                 <tbody>
                     {brands.slice(0, showMore * 10 < brands.length ? showMore * 10 : brands.length).map(brand => (
                         <tr key={brand._id}>
+                            <td>{brand._id}</td>
                             <td>{brand.name}</td>
                             <td>{brand.active}</td>
                         </tr>

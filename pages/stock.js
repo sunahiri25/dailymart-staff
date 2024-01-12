@@ -27,6 +27,7 @@ export default function StockPage() {
     return (
         <Layout>
             <h1>Stock</h1>
+            <h2 className="text-red-700 text-lg">Number of stock: {stock.length}</h2>
             <table className="basic mt-4">
                 <thead>
                     <tr>

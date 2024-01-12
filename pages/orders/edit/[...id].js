@@ -55,6 +55,12 @@ export default function EditOrderPage() {
                     <label>Email</label>
                     <input type="text" id="email" value={orderInfo?.email} />
                 </div>
+                {orderInfo?.address && (
+                    <div>
+                        <label >Address</label>
+                        <input type="text" id="address" value={orderInfo?.address + ", " + orderInfo?.ward + ", " + orderInfo?.district + ", " + orderInfo?.city} />
+                    </div>
+                )}
                 <div>
                     <label>Paid</label>
                     <select id="paid" value={paid} onChange={(e) => setPaid(e.target.value)}  >

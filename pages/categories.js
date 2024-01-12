@@ -25,10 +25,11 @@ export default function Categories() {
     return (
         <Layout>
             <h1>Categories</h1>
-
+            <h2 className="text-red-700 text-lg">Number of categories: {categories.length}</h2>
             <table className="basic mt-4">
                 <thead>
                     <tr>
+                        <td>Category ID</td>
                         <td>Category Name</td>
                         <td>Parent Category</td>
                         <td>VAT (%)</td>
@@ -38,6 +39,7 @@ export default function Categories() {
                 <tbody>
                     {categories.slice(0, showMore * 10 < categories.length ? showMore * 10 : categories.length).map(category => (
                         <tr key={category._id}>
+                            <td>{category._id}</td>
                             <td>{category.name}</td>
                             <td>{category?.parent?.name}</td>
                             <td>{category.vat}</td>

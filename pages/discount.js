@@ -24,9 +24,11 @@ export default function DiscountPage() {
     return (
         <Layout>
             <h1>Discounts</h1>
+            <h2 className="text-red-700 text-lg">Number of discounts: {discounts.length}</h2>
             <table className="basic mt-2">
                 <thead>
                     <tr>
+                        <td>Discount ID</td>
                         <td>Discount Name</td>
                         <td>Category</td>
                         <td>Value</td>
@@ -38,6 +40,7 @@ export default function DiscountPage() {
                 <tbody>
                     {discounts.slice(0, showMore * 10 < discounts.length ? showMore * 10 : discounts.length).map(discount => (
                         <tr key={discount._id}>
+                            <td>{discount._id}</td>
                             <td>{discount.name}</td>
                             <td>
                                 {discount.category?.name}

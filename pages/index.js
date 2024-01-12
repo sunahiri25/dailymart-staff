@@ -10,6 +10,8 @@ export default function Home() {
   const [revenue, setRevenue] = useState(0);
   const [weekOrders, setWeekOrders] = useState(0);
   const [weekRevenue, setWeekRevenue] = useState(0);
+  const [monthOrders, setMonthOrders] = useState(0);
+  const [monthRevenue, setMonthRevenue] = useState(0);
 
   useEffect(() => {
     if (session?.data?.user?.email) {
@@ -29,7 +31,7 @@ export default function Home() {
           const todayOrders = ordersData.filter(order => {
             const orderDate = new Date(order.createdAt);
             orderDate.setHours(0, 0, 0, 0);
-            return orderDate.getTime() === today.getTime();
+            return orderDate.getTime() === today.getTime() && (order.paid || order.paymentMethod === 'cash');
           });
           setOrders(todayOrders.length);
           setRevenue(todayOrders.reduce((acc, cur) => acc + cur.total, 0));
@@ -40,10 +42,21 @@ export default function Home() {
           const weekOrdersData = ordersData.filter(order => {
             const orderDate = new Date(order.createdAt);
             orderDate.setHours(0, 0, 0, 0);
-            return orderDate >= weekStart;
+            return orderDate >= weekStart && (order.paid || order.paymentMethod === 'cash');
           });
           setWeekOrders(weekOrdersData.length);
           setWeekRevenue(weekOrdersData.reduce((acc, cur) => acc + cur.total, 0));
+
+          const monthStart = new Date();
+          monthStart.setDate(1);
+          monthStart.setHours(0, 0, 0, 0);
+          const monthOrdersData = ordersData.filter(order => {
+            const orderDate = new Date(order.createdAt);
+            orderDate.setHours(0, 0, 0, 0);
+            return orderDate >= monthStart && (order.paid || order.paymentMethod === 'cash');
+          });
+          setMonthOrders(monthOrdersData.length);
+          setMonthRevenue(monthOrdersData.reduce((acc, cur) => acc + cur.total, 0));
         } catch (error) {
           console.error("Error fetching dashboard data:", error);
         }
@@ -92,6 +105,18 @@ export default function Home() {
           <p className="text-red-700 p-4 text-2xl">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(weekRevenue)}</p>
         </div>
 
+      </div>
+      <h1 className='text-black mt-8'>This Month</h1>
+      <div className="grid justify-between gap-7 mt-4 grid-cols-2">
+        <div className="border bg-gray-200 px-6 py-3 font-bold rounded shadow-lg text-center">
+          <h4 className="uppercase text-gray-700 text-xl">Orders</h4>
+          <p className="text-red-700 p-4 text-2xl">{monthOrders}</p>
+        </div>
+
+        <div className="border bg-gray-200 px-6 py-3 font-bold rounded shadow-lg text-center ">
+          <h4 className="uppercase text-gray-700 text-xl">Revenue</h4>
+          <p className="text-red-700 p-4 text-2xl">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(monthRevenue)}</p>
+        </div>
       </div>
 
     </Layout>

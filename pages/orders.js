@@ -31,14 +31,16 @@ export default function OrdersPage() {
             <Link href={`/orders/new`} className="bg-red-700 text-white py-1 px-2 rounded-md ">
                 Add new order
             </Link>
+            <h2 className="text-red-700 text-lg">Number of orders: {orders.length}</h2>
+
             <table className="basic mt-4">
                 <thead>
                     <tr>
                         <td>Date</td>
+                        <td>Order ID</td>
                         <td>Payment</td>
                         <td>Paid</td>
                         <td>Total</td>
-                        <td>Recipient</td>
                         <td>Products</td>
                         <td>Process</td>
                         <td></td>
@@ -48,17 +50,11 @@ export default function OrdersPage() {
                     {orders.length > 0 && orders.slice(0, showMore * 10 < orders.length ? showMore * 10 : orders.length).map(order => (
                         <tr key={order._id}>
                             <td>{(new Date(order.createdAt)).toLocaleString()}</td>
+                            <td>{order._id}</td>
                             <td className="text-center">{order.paymentMethod}</td>
                             <td className={order.paid ? "text-green-600 text-center" : "text-red-600 text-center"}>{order.paid ? 'YES' : 'NO'}</td>
                             <td>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.total)}</td>
-                            <td>
-                                {order.name} {order.email}<br />
-                                {order.phone} <br />
-                                {order.address &&
-                                    <>
-                                        {order.address}, {order.ward}, {order.district}, {order.city}                                    </>
-                                }
-                            </td>
+
                             <td>
                                 <ul>
                                     {order.address && order.line_items.slice(0, order.line_items.length - 1).map(key => (

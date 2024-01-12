@@ -22,9 +22,11 @@ export default function Products() {
     return (
         <Layout>
             <h1>Products</h1>
+            <h2 className="text-red-700 text-lg">Number of products: {products.length}</h2>
             <table className="basic mt-2">
                 <thead>
                     <tr>
+                        <td>Product ID</td>
                         <td>Product Name</td>
                         <td>Category</td>
                         <td>Brand</td>
@@ -35,6 +37,7 @@ export default function Products() {
                 <tbody>
                     {products.slice(0, showMore * 10 < products.length ? showMore * 10 : products.length).map(product => (
                         <tr key={product._id}>
+                            <td>{product._id}</td>
                             <td>{product.title}</td>
                             <td>{product.category.name}</td>
                             <td>{product.brand?.name}</td>
