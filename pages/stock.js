@@ -37,7 +37,7 @@ export default function StockPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {stock.length > 0 && stock.slice(0, showMore * 10 < stock.length ? showMore * 10 : stock.length).map(stock => (
+                    {stock.length > 0 && stock.sort((a, b) => a.product?.title.localeCompare(b.product?.title)).slice(0, showMore * 10 < stock.length ? showMore * 10 : stock.length).map(stock => (
                         <tr key={stock._id}>
                             <td>{stock.product?.title}</td>
                             <td>{stock.quantity}</td>
