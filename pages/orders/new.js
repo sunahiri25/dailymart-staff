@@ -101,7 +101,7 @@ export default function NewOrder() {
                                         newLineItems[index].price_data.product_data.id = e.value;
                                         const tempPrice = stock.find(stock => stock.product._id === e.value).product.retailPrice;
                                         const dis = discount.find(discount => discount.category._id === stock.find(stock => stock.product._id === e.value).product.category)
-                                        if (dis && (new Date(discount.start) - new Date() < 0) && (new Date(discount.end) - new Date() > 0)) {
+                                        if (dis && (new Date(dis.start) - new Date() < 0) && (new Date(dis.end) - new Date() > 0)) {
                                             if (dis.unit === '%') {
                                                 const tempDis = tempPrice * dis.value / 100;
                                                 const maxDis = tempDis > dis.max ? dis.max : tempDis;
